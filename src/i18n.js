@@ -1,11 +1,12 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-import en from "./locales/en.json";
+import nl from "./locales/nl.json";
 
-/* Only English is bundled upfront. Other locales are code-split and
+/* Only Dutch is bundled upfront. Other locales are code-split and
    loaded on demand when the user switches language. */
 const loaders = {
+  en: () => import("./locales/en.json"),
   ar: () => import("./locales/ar.json"),
   tr: () => import("./locales/tr.json"),
   fr: () => import("./locales/fr.json"),
@@ -17,9 +18,9 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    resources: { en: { translation: en } },
-    fallbackLng: "en",
-    supportedLngs: ["en", "ar", "tr", "fr", "es", "pt"],
+    resources: { nl: { translation: nl } },
+    fallbackLng: "nl",
+    supportedLngs: ["nl", "en", "ar", "tr", "fr", "es", "pt"],
     load: "languageOnly",
     interpolation: { escapeValue: false },
     detection: {
@@ -29,7 +30,7 @@ i18n
     react: { useSuspense: false },
   });
 
-const loaded = new Set(["en"]);
+const loaded = new Set(["nl"]);
 
 async function ensureLoaded(lng) {
   if (loaded.has(lng) || !loaders[lng]) return;
@@ -46,9 +47,10 @@ export async function changeLanguageSafely(lng) {
   await i18n.changeLanguage(lng);
 }
 
-/* Load the detected language at startup if it's not English.
-   We don't await here because startup shouldn't block — fallback to English. */
-if (i18n.language && i18n.language !== "en") {
+/* Load the detected language at startup if it isn't already bundled.
+   We don't await here because startup shouldn't block — the bundled
+   language renders first, then the detected language swaps in. */
+if (i18n.language && !loaded.has(i18n.language) && loaders[i18n.language]) {
   ensureLoaded(i18n.language).then(() => {
     /* Force re-render after async load by re-emitting languageChanged */
     i18n.emit("languageChanged", i18n.language);
@@ -58,6 +60,7 @@ if (i18n.language && i18n.language !== "en") {
 export default i18n;
 
 export const LANGUAGES = [
+  { code: "nl", label: "Nederlands", native: "NL", flag: "🇳🇱" },
   { code: "en", label: "English", native: "EN", flag: "🇬🇧" },
   { code: "ar", label: "العربية", native: "عربي", flag: "🇸🇦" },
   { code: "tr", label: "Türkçe", native: "TR", flag: "🇹🇷" },
