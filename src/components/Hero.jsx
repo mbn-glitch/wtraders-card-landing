@@ -31,7 +31,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-x-hidden overflow-y-visible pt-36 sm:pt-32 md:pt-28 lg:pt-24">
+    <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-x-hidden overflow-y-visible pt-48 sm:pt-44 md:pt-40 lg:pt-40">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-amber-600/10 blur-[120px]" />
         <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] rounded-full bg-amber-900/5 blur-[120px]" />
