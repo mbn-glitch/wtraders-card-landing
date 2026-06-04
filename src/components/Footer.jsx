@@ -28,7 +28,7 @@ export default function Footer() {
     }
     setSubmitState("submitting");
     const message = encodeURIComponent(`Hi! Please add me to the Wtraders Card newsletter. Email: ${emailValue}`);
-    window.open(`https://wa.me/971568010724?text=${message}`, "_blank", "noopener");
+    window.open(`https://wa.me/971504868995?text=${message}`, "_blank", "noopener");
     setTimeout(() => {
       setSubmitState("success");
       setEmailValue("");
